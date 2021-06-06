@@ -1,7 +1,5 @@
 import 'package:auction_app/Helpers/size_config.dart';
-import 'package:auction_app/Wrapper.dart';
 import 'package:auction_app/components/custom_text_field.dart';
-import 'package:auction_app/screens/login_screen.dart';
 import 'package:auction_app/services/firebase_auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -19,7 +17,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
+    progressDialog = ProgressDialog(context,
+        type: ProgressDialogType.Normal, isDismissible: false);
     return Scaffold(
       appBar: AppBar(
         title: Text("SignUp"),
@@ -63,7 +62,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               GestureDetector(
                   onTap: () async {
-                    progressDialog.style(message: "Creating account",borderRadius: 10.0,
+                    progressDialog.style(
+                        message: "Creating account",
+                        borderRadius: 10.0,
                         backgroundColor: Colors.white,
                         progressWidget: CircularProgressIndicator(),
                         elevation: 10.0,
@@ -71,9 +72,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         progress: 0.0,
                         maxProgress: 100.0,
                         progressTextStyle: TextStyle(
-                            color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+                            color: Colors.black,
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.w400),
                         messageTextStyle: TextStyle(
-                            color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600));
+                            color: Colors.black,
+                            fontSize: 19.0,
+                            fontWeight: FontWeight.w600));
                     await progressDialog.show();
                     String email = emailController.text.trim();
                     String password = emailController.text.trim();
@@ -86,17 +91,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (isSuccessful) {
                         await progressDialog.hide();
                         Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Signup successful")));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Signup successful")));
                       } else {
                         //failed to log in
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Signup failed")));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Signup failed")));
                         await progressDialog.hide();
                       }
                     } else {
                       //input is empty
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Input is not valid")));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Input is not valid")));
                       await progressDialog.hide();
-
                     }
                   },
                   child: Container(

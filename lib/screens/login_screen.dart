@@ -5,7 +5,6 @@ import 'package:auction_app/services/firebase_auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -18,7 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
+    progressDialog = ProgressDialog(context,
+        type: ProgressDialogType.Normal, isDismissible: false);
     return Scaffold(
         appBar: AppBar(
           title: Text("Login"),
@@ -52,7 +52,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    progressDialog.style(message: "Checking Credential",borderRadius: 10.0,
+                    progressDialog.style(
+                        message: "Checking Credential",
+                        borderRadius: 10.0,
                         backgroundColor: Colors.white,
                         progressWidget: CircularProgressIndicator(),
                         elevation: 10.0,
@@ -60,9 +62,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         progress: 0.0,
                         maxProgress: 100.0,
                         progressTextStyle: TextStyle(
-                            color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+                            color: Colors.black,
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.w400),
                         messageTextStyle: TextStyle(
-                            color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600));
+                            color: Colors.black,
+                            fontSize: 19.0,
+                            fontWeight: FontWeight.w600));
                     await progressDialog.show();
                     String email = emailController.text.trim();
                     String password = emailController.text.trim();
@@ -71,17 +77,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           .login(email, password);
                       if (isSuccessful) {
                         await progressDialog.hide();
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login successful")));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Login successful")));
                       } else {
                         await progressDialog.hide();
                         //failed to log in
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login failed")));
-
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Login failed")));
                       }
                     } else {
                       await progressDialog.hide();
                       //input is empty
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Email or Password is wrong")));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("Email or Password is wrong")));
                     }
                   },
                   child: Container(

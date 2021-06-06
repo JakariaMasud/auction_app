@@ -54,7 +54,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       height: 10.0,
                     ),
                     CustomText(
-                      text: 'Minimum Bid Price : ${widget.product.minBidPrice} Taka',
+                      text:
+                          'Minimum Bid Price : ${widget.product.minBidPrice} Taka',
                       size: 17.0,
                     ),
                     SizedBox(
@@ -92,7 +93,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         : SizedBox(
                             height: 10.0,
                           ),
-                    snapshot.data.length > 0 ? CustomText(text: "Current Bid winner : ${snapshot.data[0].bidderName} with price of ${snapshot.data[0].bidPrice} Taka",size: 15,):Container() ,
+                    snapshot.data.length > 0
+                        ? CustomText(
+                            text:
+                                "Current Bid winner : ${snapshot.data[0].bidderName} with price of ${snapshot.data[0].bidPrice} Taka",
+                            size: 15,
+                          )
+                        : Container(),
                     snapshot.data.length > 0
                         ? DataTable(
                             columns: [
@@ -124,12 +131,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 DataCell(Text(bid.bidPrice),
                                     showEditIcon: editIconShouldShow,
                                     onTap: () {
-                                  showDialogForBid(context: context,bid: bid);
-                                    })
+                                  showDialogForBid(context: context, bid: bid);
+                                })
                               ]);
                             }).toList())
-                        : CustomText(
-                            text: "No One Has bid for this Product")
+                        : CustomText(text: "No One Has bid for this Product")
                   ],
                 ),
               );
@@ -161,7 +167,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       TextFormField(
                         keyboardType: TextInputType.number,
                         controller: _textEditingController,
-
                         validator: (value) {
                           return value.isNotEmpty &&
                                   int.parse(value) >
@@ -183,26 +188,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     child: Text('Done'),
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
-                        if(bid==null){
+                        if (bid == null) {
                           //new Bid
                           String currentUserId =
                               FirebaseAuthService.instance.getCurrentUser().uid;
                           String currentUserName =
-                          await FirestoreService.instance.getUserName();
+                              await FirestoreService.instance.getUserName();
                           BidModel bidObj = BidModel(
                               bidderName: currentUserName,
                               bidPrice: bidValue,
                               bidderId: currentUserId);
-                          await FirestoreService.instance.addBid(
-                              bidObj, widget.product.id, widget.product.ownerId);
+                          await FirestoreService.instance.addBid(bidObj,
+                              widget.product.id, widget.product.ownerId);
                           Navigator.of(context).pop();
-                        }else{
+                        } else {
                           //update existing bid
-                          bid.bidPrice=bidValue;
-                          await FirestoreService.instance.updateBid(bid, widget.product.id, widget.product.ownerId);
+                          bid.bidPrice = bidValue;
+                          await FirestoreService.instance.updateBid(
+                              bid, widget.product.id, widget.product.ownerId);
                           Navigator.of(context).pop();
                         }
-
                       }
                     }),
                 ElevatedButton(

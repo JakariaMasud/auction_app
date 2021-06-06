@@ -26,16 +26,21 @@ class MyPostedItemScreen extends StatelessWidget {
         stream: FirestoreService.instance.userProductStream(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if(snapshot.data.length<1){
-              return Center(child: CustomText(text: 'No More Item Available Right Now',size: 24.0,),);
-            }else{
+            if (snapshot.data.length < 1) {
+              return Center(
+                child: CustomText(
+                  text: 'No More Item Available Right Now',
+                  size: 24.0,
+                ),
+              );
+            } else {
               return Container(
                 color: Colors.grey[100],
                 child: GridView.count(
                   crossAxisCount: 2,
                   children: snapshot.data
                       .map((singleProduct) =>
-                      ProductItemCard(productModel: singleProduct))
+                          ProductItemCard(productModel: singleProduct))
                       .toList(),
                 ),
               );
